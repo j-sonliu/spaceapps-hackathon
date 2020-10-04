@@ -2,7 +2,6 @@
 body
 {
     background-color: #000;
-    /* background-color: #191970; */
 }
 
 .container
@@ -133,9 +132,15 @@ body
     padding-top: 3%;
 }
 
+#tks-logo a
+{
+    width: 2vw;
+    height: auto;
+}
+
 #tks-logo img
 {
-    width: 6vw;
+    width: 2vw;
     height: auto;
 }
 
