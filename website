@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset = "etf-8">
+        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="insert desc">
+        <meta name="keywords" content="astrophysics, nasa, space, stars, hackathon, spaceapps, submission, high energy phenomena viewer">
+        <meta name="author" content="HEAT Vision">
+        <meta name="theme-color" content="ffffff">
+        <title> HEAT Viewer </title>
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="icon" href="../img/Telescope.png" alt="Browser icon">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- import jQuery library -->
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet"> <!-- import google font Cairo -->
+        <link rel="stylesheet" href="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.css" /> <!-- import Aladin stylesheet -->
+    </head>
+
+    <body>
+        <header>
+            <span id="title">
+                <h1> HEAT Viewer </h1>
+            </span>
+            <span id="header-icon">
+                <img src="../img/Telescope White Background.png" alt="Not Available">
+            </span>
+            <span id="subtitle">
+                <p> High-Energy Astrophysics Telemetry Viewer </p>
+            </span>
+            <hr>
+        </header>
+
+        <span class="left-column-container">
+            <h2> About </h2>
+            <p> This purpose of this platform is to inform people of the locations of high-energy celestial phenomena. In this platform, we can see these celestial phenomena in the following wavelengths: Gamma ray, X-ray, Ultraviolet, AllWISE, Infrared, and radio. To locate these high-energy celestial phenomena, we use a celestial coordinate system. The system that is used to find the location of these celestial phenomena is the J2000. This is a system that is used to define a celestial reference frame. Now how do celestial coordinates work? </p>
+            <br>
+            <p> Imagine a big sphere encapsulating the Earth. That would be the celestial sphere. Celestial coordinates work by using the celestial sphere. What's on the celestial sphere are the high-energy celestial phenomena that occurs out there in space. The celestial sphere has a an equator called the celestial equator which is not the same as Earth's equator. It has a north pole called the north celestial pole which is the same as Earth's north pole. And a south pole called the south celestial pole which is the same as Earth's south pole. </p>
+        </span>
+        <span class="right-column-container">
+            <h2> more info </h2>
+            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+            <br>
+            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+        </span>
+
+        <span id="aladin-lite-div"></span>
+        <script type="text/javascript" src="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.js" charset="utf-8"></script>
+        <script type="text/javascript">
+        var aladin = A.aladin('#aladin-lite-div', {survey: "P/DSS2/color", fov:60});
+        </script>
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <hr>
+
+        <section id="bottom">
+            <div class="left-column-container">
+                <h2> Wavelength </h2>
+                <span id="aladin-lite-div"></span>
+                <div id="wavelength-selector">
+                    <input id="Gamma" class="jpg-survey" type="radio" name="survey" value="http://skies.esac.esa.int/Integral/color/" checked><label for="Gamma">Gamma Ray<label>
+                    <input id="X-ray" class="jpg-survey" type="radio" name="survey" value="http://alasky.u-strasbg.fr/2MASS/Color/"><label for="X-ray">X-ray<label>
+                    <input id="UV" class="png-survey" type="radio" name="survey" value="https://skyview.gsfc.nasa.gov/surveys/uvot/cnt/UVW2/"><label for="UV">Ultraviolet<label>
+                    <input id="Visual" class="jpg-survey" type="radio" name="survey" value="http://alasky.u-strasbg.fr/DSS/DSSColor" checked><label for="Visual">Visual<label>
+                    <input id="Infrared" class="png-survey" type="radio" name="survey" value="http://alasky.u-strasbg.fr/PLANCK/R2/HFI_SkyMap_100_2048_R2.00/"><label for="Infrared">Infrared<label>
+                    <input id="Radio" class="png-survey" type="radio" name="survey" value="http://alasky.u-strasbg.fr/ancillary/simbad-biblio/Radio/"><label for="Radio">Radio<label>
+                </div>
+
+            <script type="text/javascript" src="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.js" charset="utf-8"></script>
+            <script type="text/javascript">
+                var aladin = A.aladin('#aladin-lite-div', {survey: "P/DSS2/color", fov:60});
+                $('input[name=survey]').change(function()
+                {
+                    var surveyType = "";
+                    if ($(this).hasClass("jpg-survey"))
+                    {
+                        surveyType = "jpg";
+                    }
+                    else if ($(this).hasClass("png-survey"))
+                    {
+                        surveyType = "png";
+                    }
+                aladin.setImageSurvey(aladin.createImageSurvey("Survey", "Survey", $(this).val(), "equatorial", 100, {imgFormat: surveyType}));
+            });
+            </script>
+
+            </div>
+            <div class="left-column-container">
+                <h2> Timeline </h2>
+            </div>
+            <div class="right-column-container">
+              <h2> Info </h2>
+              <p> Made for: 2020 NASA SpaceApps Hackathon </p>
+              <!-- <span id="space-apps-logo">
+                  <a href="https://www.spaceappschallenge.org/" target="blank"><img src="../img/Space Apps Logo White.png"></img>/<a>
+              </span> -->
+              <span id="names">
+                  <p> Made by: Abigail Lee, Jason Liu, Benson Manzano, Zahed Siddiqui </p>
+              </span>
+              <span id="tks-logo">
+                  <a href="https://tks.world/" target="blank"><img src="../img/TKS Logo White.png"></img>/<a>
+              </span>
+            </div>
+        </section>
+
+    </body>
