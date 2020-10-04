@@ -2,7 +2,6 @@
 body
 {
     background-color: #000;
-    /* background-color: #191970; */
 }
 
 .container
@@ -106,38 +105,39 @@ body
     position: absolute;
     top: 10%;
     left: 33%;
-    background-image: url("../img/Background.jpg");
+    background-image: url("Background.jpg");
 }
 
 #wavelength-selector
 {
+    font-family: 'Cairo', sans-serif;
     color: #fff;
 }
 
-/* #space-apps-logo
-{
-    width: auto;
-    float: right;
-} */
-
-#names
+#made-for
 {
     width: auto;
     float: left;
 }
 
-#tks-logo
+#made-for p
 {
-    width: auto;
-    float: right;
-    padding-top: 3%;
+    line-height: 1em;
 }
 
-#tks-logo img
+#names p
 {
-    width: 6vw;
-    height: auto;
+    width: auto;
+    float: left;
+    line-height: 1em;
 }
+/* 
+#tks-logo
+{
+    width: 20px;
+    float: right;
+    padding-top: 3%;
+} */
 
 @media only screen and (max-width: 768px)
 {

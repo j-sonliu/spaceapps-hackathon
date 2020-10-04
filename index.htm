@@ -11,8 +11,8 @@
         <meta name="author" content="HEAT Vision">
         <meta name="theme-color" content="ffffff">
         <title> HEAT Viewer </title>
-        <link rel="stylesheet" href="../css/style.css">
-        <link rel="icon" href="../img/Telescope.png" alt="Browser icon">
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="Telescope.png" alt="Browser icon">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- import jQuery library -->
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet"> <!-- import google font Cairo -->
         <link rel="stylesheet" href="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.css" /> <!-- import Aladin stylesheet -->
@@ -24,7 +24,7 @@
                 <h1> HEAT Viewer </h1>
             </span>
             <span id="header-icon">
-                <img src="../img/Telescope White Background.png" alt="Not Available">
+                <a href="index.htm"><img src="TelescopeWhiteBackground.png" alt="Not Available"><a>
             </span>
             <span id="subtitle">
                 <p> High-Energy Astrophysics Telemetry Viewer </p>
@@ -51,7 +51,7 @@
         var aladin = A.aladin('#aladin-lite-div', {survey: "P/DSS2/color", fov:60});
         </script>
 
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <hr>
 
         <section id="bottom">
@@ -91,15 +91,17 @@
             </div>
             <div class="right-column-container">
               <h2> Info </h2>
-              <p> Made for: 2020 NASA SpaceApps Hackathon </p>
-              <!-- <span id="space-apps-logo">
-                  <a href="https://www.spaceappschallenge.org/" target="blank"><img src="../img/Space Apps Logo White.png"></img>/<a>
-              </span> -->
+              <span id="made-for">
+                  <p> Made for: 2020 NASA SpaceApps Hackathon </p>
+              </span>
+              <span id="space-apps-logo">
+                  <a href="https://www.spaceappschallenge.org/" target="blank"><img src="SpaceAppsLogo.png" style="width: 4vw; height: auto; padding-left: 1vw; margin-top: -2vw;"></a>
+              </span>
               <span id="names">
                   <p> Made by: Abigail Lee, Jason Liu, Benson Manzano, Zahed Siddiqui </p>
               </span>
               <span id="tks-logo">
-                  <a href="https://tks.world/" target="blank"><img src="../img/TKS Logo White.png"></img>/<a>
+                  <a href="https://tks.world/" target="blank"><img src="TKSLogoWhiteCropped.png" style="width: 5vw; height: auto; margin: 2vw 0 -3vw 2vw;"></a>
               </span>
             </div>
         </section>
