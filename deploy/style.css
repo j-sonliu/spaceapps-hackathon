@@ -1,0 +1,164 @@
+/* Global */
+body
+{
+    background-color: #000;
+}
+
+.container
+{
+   width: 80%;
+   margin: auto;
+   overflow: hidden;
+}
+
+.left-column-container
+{
+    width: 30%;
+    float: left;
+    padding-left: 1%;
+    margin-right: 2%;
+}
+
+.right-column-container
+{
+    width: 30%;
+    float: right;
+}
+
+/* Local */
+#title
+{
+    width: 50%;
+    float: left;
+    position: absolute;
+    top: 0;
+}
+
+#title h1
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+    font-size: 3em;
+    line-height: 0em;
+    margin-left: 1%;
+    padding-left: 1%;
+}
+
+#header-icon
+{
+    width: 50vw;
+    height: auto;
+    text-align: right;
+    position: absolute;
+    top: 0.5%;
+    right: 1%;
+}
+
+#header-icon img
+{
+    height: 10%;
+    width: 10%;
+}
+
+#subtitle p
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+    font-size: 1em;
+    line-height: 0em;
+    margin-top: 4%;
+    padding-left: 1%;
+}
+
+.left-column-container h2
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+}
+
+.left-column-container p
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+    text-indent: 2em;
+    line-height: 2.5em;
+}
+
+.right-column-container h2
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+}
+
+.right-column-container p
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+    text-indent: 2em;
+    line-height: 2.5em;
+}
+
+#aladin-lite-div
+{
+    height: 35vw;
+    width: 35vw;
+    position: absolute;
+    top: 10%;
+    left: 33%;
+    background-image: url("Background.jpg");
+}
+
+#wavelength-selector
+{
+    color: #fff;
+}
+
+/* #space-apps-logo
+{
+    width: auto;
+    float: right;
+} */
+
+#names
+{
+    width: auto;
+    float: left;
+}
+
+#tks-logo
+{
+    width: auto;
+    float: right;
+    padding-top: 3%;
+}
+
+#tks-logo img
+{
+    width: 6vw;
+    height: auto;
+}
+
+@media only screen and (max-width: 768px)
+{
+  /* For mobile phones: */
+  [class*="col-"]
+  {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+ .col-5 {width: 41.66%;}
+ .col-6 {width: 50%;}
+ .col-7 {width: 58.33%;}
+ .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+ .col-12 {width: 100%;}
+}
