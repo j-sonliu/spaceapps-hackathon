@@ -11,6 +11,7 @@
         <meta name="author" content="HEAT Vision">
         <meta name="theme-color" content="ffffff">
         <title> HEAT Viewer </title> 
+        <span id='aladin-lite-div' style='display:none'></span>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" href="Telescope.png" alt="Browser icon">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- import jQuery library -->
@@ -18,6 +19,13 @@
         <link rel="stylesheet" href="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.css" /> <!-- import Aladin stylesheet -->        
         <script type="text/javascript" src="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.js" charset="utf-8"></script>
         <script>    
+            /* function sleep(milliseconds) {
+                const date = Date.now();
+                let currentDate = null;
+                do {
+                    currentDate = Date.now();
+                } while (currentDate - date < milliseconds);
+            } */      
             function parseTime (timeStr) {
                 let year = parseInt(timeStr.substr(0, 4)) - 1990;
                 let month = parseInt(timeStr.substr(5, 2));
@@ -53,27 +61,25 @@
                 return catalog;
             }
             function promiseSRe (catalog) {
-                var promise = new Promise(function(resolve) {
-                    setTimeout(() => {resolve(sortByTime(prepareSNeData(catalog, 1990, 2014), true))}, 1000);
+                return new Promise(function(resolve) {
+                    setTimeout(() => {resolve(sortByTime(prepareSNeData(catalog, 1990, 2014), true))}, 4000);
                 });
-                return promise;
             }
             function promiseGRB (catalog) {
-                var promise = new Promise(function(resolve) {
-                    setTimeout(() => {resolve(sortByTime(catalog, false))}, 300);
+                return new Promise(function(resolve) {
+                    setTimeout(() => {resolve(sortByTime(catalog, false))}, 1000);
                 });
-                return promise;
             }
             async function prepareData () {
-                // let initAladin = A.aladin('#aladin-lite-div', {target: 'M 45', fov: 5});
+                let initAladin = A.aladin('#aladin-lite-div', {target: 'M 45', fov: 5});
                 let rawSNeCatalog = await A.catalogFromURL('https://vizier.unistra.fr/viz-bin/votable?-source=B/sn/sncat&-c=galactic%20center&-out.max=9999&-out.add=EpMax&-c.rd=180', {onClick: 'showPopup'});
                 let rawGRBCatalog = await A.catalogFromVizieR('IX/51/table2', 'galactic center', 180, {onClick: 'showPopup'});
-                // await initAladin.addCatalog(rawSNeCatalog);
-                // await initAladin.addCatalog(rawGRBCatalog);
+                await initAladin.addCatalog(rawSNeCatalog);
+                await initAladin.addCatalog(rawGRBCatalog);
                 var output = {};
                 output.SNe = await promiseSRe(rawSNeCatalog);
                 output.GRB = await promiseGRB(rawGRBCatalog);
-                return output;
+                return await output;
             }
             var initialCatalogs = prepareData();
             console.log(initialCatalogs)
@@ -155,14 +161,20 @@
         <script type="text/javascript">
             var aladin = A.aladin('#aladin-lite-non', {survey: "P/DSS2/color", fov:60});
             let currentTime = 9130;
+            let lastTime = 9130;
             let showAll = true;
             let SNeData = A.catalog({onClick: 'showPopup'});
             let GRBData = A.catalog({onClick: 'showPopup'});
             aladin.addCatalog(SNeData);
             aladin.addCatalog(GRBData);
+            let showingSNe = true;
+            let showingGRB = true;
+            let started = false;
             const timeWindow = 60;
 
-            function updateSNeTime () {
+
+            async function updateSNeTime () {
+                await console.log(initialCatalogs.SNe);
                 for (const source in initialCatalogs.SNe.sources) {
                     let sourceTime = parseTime(source.data.EpMax);
                     SNeData.remove(source);
@@ -177,7 +189,8 @@
                     }
                 }
             }
-            function updateGRBTime () {
+            async function updateGRBTime () {
+                await console.log(initialCatalogs.GRB);
                 for (const source in initialCatalogs.GRB.sources) {
                     let sourceTime = parseTime(source.data.Date);
                     GRBData.remove(source);
@@ -192,6 +205,22 @@
                     }
                 }
             }
+            function update () {
+                if(lastTime != currentTime || !started) {
+                    try {
+                        showingSNe ? updateSNeTime() : null;
+                        showingGRB ? updateGRBTime() : null;                    
+                        started = true;
+                        console.log('pog');
+                    } catch (error) {console.error(error)}
+                    finally {
+                        lastTime = currentTime
+                        console.log(initialCatalogs)
+                        setTimeout(() => {console.log(Object.getOwnPropertyNames(initialCatalogs.prototype)), console.log(initialCatalogs)}, 6000);
+                    }
+                }
+                window.requestAnimationFrame(update);
+            }
             $('input[name=survey]').change(function() {
                 var surveyType = "";
                 if ($(this).hasClass("jpg-survey")) {
@@ -202,9 +231,7 @@
                 aladin.setImageSurvey(aladin.createImageSurvey("Survey", "Survey", $(this).val(), "equatorial", 100, {imgFormat: surveyType}));
             });
 
-
+            window.requestAnimationFrame(update);
         </script>
-
-
     </body>
 </html>
