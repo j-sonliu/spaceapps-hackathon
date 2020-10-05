@@ -10,7 +10,7 @@
         <meta name="keywords" content="astrophysics, nasa, space, stars, hackathon, spaceapps, submission, high energy phenomena viewer">
         <meta name="author" content="HEAT Vision">
         <meta name="theme-color" content="ffffff">
-        <title> HEAT Viewer </title>
+        <title> HEAT Viewer </title> 
         <link rel="stylesheet" href="style.css">
         <link rel="icon" href="Telescope.png" alt="Browser icon">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- import jQuery library -->
@@ -54,28 +54,29 @@
             }
             function promiseSRe (catalog) {
                 var promise = new Promise(function(resolve) {
-                    setTimeout(() => {resolve(sortByTime(prepareSNeData(catalog, 1990, 2014), true))}, 4000);
+                    setTimeout(() => {resolve(sortByTime(prepareSNeData(catalog, 1990, 2014), true))}, 1000);
                 });
                 return promise;
             }
             function promiseGRB (catalog) {
                 var promise = new Promise(function(resolve) {
-                    setTimeout(() => {resolve(sortByTime(catalog, false))}, 1000);
+                    setTimeout(() => {resolve(sortByTime(catalog, false))}, 300);
                 });
                 return promise;
             }
             async function prepareData () {
-                let initAladin = A.aladin('#aladin-lite-div', {target: 'M 45', fov: 5});
+                // let initAladin = A.aladin('#aladin-lite-div', {target: 'M 45', fov: 5});
                 let rawSNeCatalog = await A.catalogFromURL('https://vizier.unistra.fr/viz-bin/votable?-source=B/sn/sncat&-c=galactic%20center&-out.max=9999&-out.add=EpMax&-c.rd=180', {onClick: 'showPopup'});
                 let rawGRBCatalog = await A.catalogFromVizieR('IX/51/table2', 'galactic center', 180, {onClick: 'showPopup'});
-                await initAladin.addCatalog(rawSNeCatalog);
-                await initAladin.addCatalog(rawGRBCatalog);
+                // await initAladin.addCatalog(rawSNeCatalog);
+                // await initAladin.addCatalog(rawGRBCatalog);
                 var output = {};
                 output.SNe = await promiseSRe(rawSNeCatalog);
                 output.GRB = await promiseGRB(rawGRBCatalog);
                 return output;
             }
             var initialCatalogs = prepareData();
+            console.log(initialCatalogs)
         </script>
     </head>
 
@@ -106,7 +107,7 @@
             <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
         </span>
 
-        <span id="aladin-lite-div" style="display:none"></span>
+
 
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <hr>
@@ -123,58 +124,6 @@
                     <input id="Infrared" class="png-survey" type="radio" name="survey" value="http://alasky.u-strasbg.fr/PLANCK/R2/HFI_SkyMap_100_2048_R2.00/"><label for="Infrared">Infrared<label>
                     <input id="Radio" class="png-survey" type="radio" name="survey" value="http://alasky.u-strasbg.fr/ancillary/simbad-biblio/Radio/"><label for="Radio">Radio<label>
                 </div>
-
-            <script type="text/javascript" src="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.js" charset="utf-8"></script>
-            <script type="text/javascript">
-                var aladin = A.aladin('#aladin-lite-non', {survey: "P/DSS2/color", fov:60});
-                let currentTime = 9130;
-                let showAll = true;
-                let SNeData = initialCatalogs.SNe;
-                let GRBData = initialCatalogs.GRB;
-                aladin.addCatalog(SNeData);
-                adadin.addCatalog(GRBData);
-                const timeWindow = 60;
-
-                function updateSNeTime () {
-                for (const source in initialCatalogs.SNe.sources) {
-                    let sourceTime = parseTime(source.data.EpMax);
-                    SNeData.remove(source);
-                    if (!showAll) {
-                    if (sourceTime > currentTime - timeWindow && sourceTime <= currentTime) {
-                        SNeData.addSources(source);
-                    }
-                    } else {
-                    if (sourceTime <= currentTime) {
-                        SNeData.addSources(source);
-                    }
-                    }
-                }
-                }
-                function updateGRBTime () {
-                for (const source in initialCatalogs.GRB.sources) {
-                    let sourceTime = parseTime(source.data.Date);
-                    GRBData.remove(source);
-                    if (!showAll) {
-                    if (sourceTime > currentTime - timeWindow && sourceTime <= currentTime) {
-                        GRBData.addSources(source);
-                    }
-                    } else {
-                    if (sourceTime <= currentTime) {
-                        GRB Data.addSources(source);
-                    }
-                    }
-                }
-                }
-                $('input[name=survey]').change(function() {
-                    var surveyType = "";
-                    if ($(this).hasClass("jpg-survey")) {
-                        surveyType = "jpg";
-                    } else if ($(this).hasClass("png-survey")) {
-                        surveyType = "png";
-                    }
-                    aladin.setImageSurvey(aladin.createImageSurvey("Survey", "Survey", $(this).val(), "equatorial", 100, {imgFormat: surveyType}));
-                });
-            </script>
 
 
             </div>
@@ -202,6 +151,60 @@
         </section>
 
         <div id='aladin-lite-non' style='width: 500px;height: 500px;'></div>
+
+        <script type="text/javascript">
+            var aladin = A.aladin('#aladin-lite-non', {survey: "P/DSS2/color", fov:60});
+            let currentTime = 9130;
+            let showAll = true;
+            let SNeData = A.catalog({onClick: 'showPopup'});
+            let GRBData = A.catalog({onClick: 'showPopup'});
+            aladin.addCatalog(SNeData);
+            aladin.addCatalog(GRBData);
+            const timeWindow = 60;
+
+            function updateSNeTime () {
+                for (const source in initialCatalogs.SNe.sources) {
+                    let sourceTime = parseTime(source.data.EpMax);
+                    SNeData.remove(source);
+                    if (!showAll) {
+                        if (sourceTime > currentTime - timeWindow && sourceTime <= currentTime) {
+                            SNeData.addSources(source);
+                        }
+                    } else {
+                        if (sourceTime <= currentTime) {
+                            SNeData.addSources(source);
+                        }
+                    }
+                }
+            }
+            function updateGRBTime () {
+                for (const source in initialCatalogs.GRB.sources) {
+                    let sourceTime = parseTime(source.data.Date);
+                    GRBData.remove(source);
+                    if (!showAll) {
+                        if (sourceTime > currentTime - timeWindow && sourceTime <= currentTime) {
+                            GRBData.addSources(source);
+                        }
+                    } else {
+                        if (sourceTime <= currentTime) {
+                            GRBData.addSources(source);
+                        }
+                    }
+                }
+            }
+            $('input[name=survey]').change(function() {
+                var surveyType = "";
+                if ($(this).hasClass("jpg-survey")) {
+                    surveyType = "jpg";
+                } else if ($(this).hasClass("png-survey")) {
+                    surveyType = "png";
+                }
+                aladin.setImageSurvey(aladin.createImageSurvey("Survey", "Survey", $(this).val(), "equatorial", 100, {imgFormat: surveyType}));
+            });
+
+
+        </script>
+
 
     </body>
 </html>
