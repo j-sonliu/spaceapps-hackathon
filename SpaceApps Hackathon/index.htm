@@ -26,6 +26,11 @@
                     currentDate = Date.now();
                 } while (currentDate - date < milliseconds);
             } */      
+            function delay(t, v) {
+                return new Promise(function(resolve) { 
+                    setTimeout(resolve.bind(null, v), t)
+                });
+            }
             function parseTime (timeStr) {
                 let year = parseInt(timeStr.substr(0, 4)) - 1990;
                 let month = parseInt(timeStr.substr(5, 2));
@@ -42,9 +47,9 @@
                 }
                 return newSources;
             }
-            function sortByTime (catalog, SRe) {
+            function sortByTime (catalog, SNe) {
                 catalog.sources.sort(function(a, b){
-                    if (SRe) {
+                    if (SNe) {
                         var aTime = parseTime(a.data.EpMax);
                         var bTime = parseTime(b.data.EpMax);
                     } else {
@@ -60,9 +65,9 @@
                 });
                 return catalog;
             }
-            function promiseSRe (catalog) {
-                return new Promise(function(resolve) {
-                    setTimeout(() => {resolve(sortByTime(prepareSNeData(catalog, 1990, 2014), true))}, 4000);
+            function promiseSNe (catalog) {
+                return delay(4000).then(function() {
+                    return sortByTime(prepareSNeData(catalog, 1990, 2014), true);
                 });
             }
             function promiseGRB (catalog) {
@@ -77,12 +82,12 @@
                 await initAladin.addCatalog(rawSNeCatalog);
                 await initAladin.addCatalog(rawGRBCatalog);
                 var output = {};
-                output.SNe = await promiseSRe(rawSNeCatalog);
+                output.SNe = await promiseSNe(rawSNeCatalog);
+                console.log(promiseSNe(rawSNeCatalog));
                 output.GRB = await promiseGRB(rawGRBCatalog);
                 return await output;
             }
             var initialCatalogs = prepareData();
-            console.log(initialCatalogs)
         </script>
     </head>
 
@@ -174,49 +179,56 @@
 
 
             async function updateSNeTime () {
-                await console.log(initialCatalogs.SNe);
-                for (const source in initialCatalogs.SNe.sources) {
-                    let sourceTime = parseTime(source.data.EpMax);
-                    SNeData.remove(source);
-                    if (!showAll) {
-                        if (sourceTime > currentTime - timeWindow && sourceTime <= currentTime) {
-                            SNeData.addSources(source);
-                        }
-                    } else {
-                        if (sourceTime <= currentTime) {
-                            SNeData.addSources(source);
+                const SNe = await initialCatalogs.SNe;
+                try {
+                    for (const source in SNe.sources) {
+                        let sourceTime = parseTime(source.data.EpMax);
+                        SNeData.remove(source);
+                        if (!showAll) {
+                            if (sourceTime > currentTime - timeWindow && sourceTime <= currentTime) {
+                                SNeData.addSources(source);
+                            }
+                        } else {
+                            if (sourceTime <= currentTime) {
+                                SNeData.addSources(source);
+                            }
                         }
                     }
-                }
+                } catch(error) {console.log(error); return error}
             }
             async function updateGRBTime () {
-                await console.log(initialCatalogs.GRB);
-                for (const source in initialCatalogs.GRB.sources) {
-                    let sourceTime = parseTime(source.data.Date);
-                    GRBData.remove(source);
-                    if (!showAll) {
-                        if (sourceTime > currentTime - timeWindow && sourceTime <= currentTime) {
-                            GRBData.addSources(source);
-                        }
-                    } else {
-                        if (sourceTime <= currentTime) {
-                            GRBData.addSources(source);
+                const GRB = await initialCatalogs.GRB;
+                try {
+                    for (const source in GRB.sources) {
+                        let sourceTime = parseTime(source.data.Date);
+                        GRBData.remove(source);
+                        if (!showAll) {
+                            if (sourceTime > currentTime - timeWindow && sourceTime <= currentTime) {
+                                GRBData.addSources(source);
+                            }
+                        } else {
+                            if (sourceTime <= currentTime) {
+                                GRBData.addSources(source);
+                            }
                         }
                     }
-                }
+                } catch(error) {return error}
             }
             function update () {
                 if(lastTime != currentTime || !started) {
                     try {
-                        showingSNe ? updateSNeTime() : null;
-                        showingGRB ? updateGRBTime() : null;                    
-                        started = true;
-                        console.log('pog');
+                        let SNeError = false;
+                        let GRBError = false;
+                        showingSNe ? SNeError = updateSNeTime() : null;
+                        showingGRB ? GRBError = updateGRBTime() : null;
+                        if (!SNeError && !GRBError) {
+                            started = true;
+                            console.log('pog');
+                        }
                     } catch (error) {console.error(error)}
                     finally {
                         lastTime = currentTime
-                        console.log(initialCatalogs)
-                        setTimeout(() => {console.log(Object.getOwnPropertyNames(initialCatalogs.prototype)), console.log(initialCatalogs)}, 6000);
+                        console.log(SNeData);
                     }
                 }
                 window.requestAnimationFrame(update);
