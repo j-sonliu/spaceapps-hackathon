@@ -15,7 +15,8 @@
         <link rel="icon" href="Telescope.png" alt="Browser icon">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- import jQuery library -->
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet"> <!-- import google font Cairo -->
-        <link rel="stylesheet" href="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.css" /> <!-- import Aladin stylesheet -->
+        <link rel="stylesheet" href="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.css" /> <!-- import Aladin stylesheet -->        
+        <script type="text/javascript" src="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.js" charset="utf-8"></script>
         <script>    
             function parseTime (timeStr) {
                 let year = parseInt(timeStr.substr(0, 4)) - 1990;
@@ -64,11 +65,11 @@
                 return promise;
             }
             async function prepareData () {
-                let aladin = A.aladin('#aladin-lite-div', {target: 'M 45', fov: 5});
+                let initAladin = A.aladin('#aladin-lite-div', {target: 'M 45', fov: 5});
                 let rawSNeCatalog = await A.catalogFromURL('https://vizier.unistra.fr/viz-bin/votable?-source=B/sn/sncat&-c=galactic%20center&-out.max=9999&-out.add=EpMax&-c.rd=180', {onClick: 'showPopup'});
                 let rawGRBCatalog = await A.catalogFromVizieR('IX/51/table2', 'galactic center', 180, {onClick: 'showPopup'});
-                await aladin.addCatalog(rawSNeCatalog);
-                await aladin.addCatalog(rawGRBCatalog);
+                await initAladin.addCatalog(rawSNeCatalog);
+                await initAladin.addCatalog(rawGRBCatalog);
                 var output = {};
                 output.SNe = await promiseSRe(rawSNeCatalog);
                 output.GRB = await promiseGRB(rawGRBCatalog);
@@ -106,7 +107,6 @@
         </span>
 
         <span id="aladin-lite-div" style="display:none"></span>
-        <script type="text/javascript" src="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.js" charset="utf-8"></script>
 
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <hr>
@@ -127,7 +127,44 @@
             <script type="text/javascript" src="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.js" charset="utf-8"></script>
             <script type="text/javascript">
                 var aladin = A.aladin('#aladin-lite-non', {survey: "P/DSS2/color", fov:60});
-                    
+                let currentTime = 9130;
+                let showAll = true;
+                let SNeData = initialCatalogs.SNe;
+                let GRBData = initialCatalogs.GRB;
+                aladin.addCatalog(SNeData);
+                adadin.addCatalog(GRBData);
+                const timeWindow = 60;
+
+                function updateSNeTime () {
+                for (const source in initialCatalogs.SNe.sources) {
+                    let sourceTime = parseTime(source.data.EpMax);
+                    SNeData.remove(source);
+                    if (!showAll) {
+                    if (sourceTime > currentTime - timeWindow && sourceTime <= currentTime) {
+                        SNeData.addSources(source);
+                    }
+                    } else {
+                    if (sourceTime <= currentTime) {
+                        SNeData.addSources(source);
+                    }
+                    }
+                }
+                }
+                function updateGRBTime () {
+                for (const source in initialCatalogs.GRB.sources) {
+                    let sourceTime = parseTime(source.data.Date);
+                    GRBData.remove(source);
+                    if (!showAll) {
+                    if (sourceTime > currentTime - timeWindow && sourceTime <= currentTime) {
+                        GRBData.addSources(source);
+                    }
+                    } else {
+                    if (sourceTime <= currentTime) {
+                        GRB Data.addSources(source);
+                    }
+                    }
+                }
+                }
                 $('input[name=survey]').change(function() {
                     var surveyType = "";
                     if ($(this).hasClass("jpg-survey")) {
