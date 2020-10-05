@@ -1,0 +1,208 @@
+/* Global */
+body
+{
+    background-color: #000;
+}
+
+.container
+{
+   width: 80%;
+   margin: auto;
+   overflow: hidden;
+}
+
+.left-column-container
+{
+    width: 30%;
+    float: left;
+    padding-left: 1%;
+    margin-right: 2%;
+}
+
+.right-column-container
+{
+    width: 30%;
+    float: right;
+}
+
+/* Local */
+#title
+{
+    width: 50%;
+    float: left;
+    position: absolute;
+    top: 0;
+}
+
+#title h1
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+    font-size: 3em;
+    line-height: 0em;
+    margin-left: 1%;
+    padding-left: 1%;
+}
+
+#header-icon
+{
+    width: 50vw;
+    height: auto;
+    text-align: right;
+    position: absolute;
+    top: 0.5%;
+    right: 1%;
+}
+
+#header-icon img
+{
+    height: 10%;
+    width: 10%;
+}
+
+#subtitle p
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+    font-size: 1em;
+    line-height: 0em;
+    margin-top: 5em;
+    padding-left: 1%;
+}
+
+.left-column-container h2
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+}
+
+.left-column-container p
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+    text-indent: 2em;
+    line-height: 2.5em;
+}
+
+.left-column-container h3
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+}
+
+.right-column-container h2
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+}
+
+.right-column-container p
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+    text-indent: 2em;
+    line-height: 2.5em;
+}
+
+#aladin-lite-non
+{
+    height: auto;
+    width: auto;
+    position: absolute;
+}
+
+#aladin-lite-div
+{
+    height: 35vw;
+    width: 35vw;
+    position: absolute;
+    background-image: url("Background.jpg");
+}
+
+#wavelength-selector
+{
+    font-family: 'Cairo', sans-serif;
+    color: #fff;
+}
+
+#made-for
+{
+    width: auto;
+    float: left;
+}
+
+#made-for p
+{
+    line-height: 1em;
+}
+
+#names p
+{
+    width: auto;
+    float: left;
+    line-height: 1em;
+}
+
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #fff;
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #4CAF50; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+@media only screen and (max-width: 768px)
+{
+  /* For mobile phones: */
+  [class*="col-"]
+  {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+ .col-5 {width: 41.66%;}
+ .col-6 {width: 50%;}
+ .col-7 {width: 58.33%;}
+ .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+ .col-12 {width: 100%;}
+}

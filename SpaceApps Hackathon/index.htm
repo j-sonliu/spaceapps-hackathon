@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset = "etf-8">
+        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="insert desc">
+        <meta name="keywords" content="astrophysics, nasa, space, stars, hackathon, spaceapps, submission, high energy phenomena viewer">
+        <meta name="author" content="HEAT Vision">
+        <meta name="theme-color" content="ffffff">
+        <title> HEAT Viewer </title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="Telescope.png" alt="Browser icon">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- import jQuery library -->
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet"> <!-- import google font Cairo -->
+        <link rel="stylesheet" href="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.css" /> <!-- import Aladin stylesheet -->
+    </head>
+
+    <body>
+        <header>
+            <span id="title">
+                <h1> HEAT Viewer </h1>
+            </span>
+            <span id="header-icon">
+                <a href="index.htm"><img src="TelescopeWhiteBackground.png" alt="Not Available"><a>
+            </span>
+            <span id="subtitle">
+                <p> High-Energy Astrophysics Telemetry Viewer </p>
+            </span>
+            <hr>
+        </header>
+
+        <span class="left-column-container">
+            <h2> About </h2>
+            <p> This purpose of this platform is to inform people of the locations of high-energy celestial phenomena. With this application, users can see high-energy celestial phenomena in the following wavelengths (from highest to lowest frequency): gamma ray, x-ray, ultraviolet, visual, infrared, and radio. To locate these high-energy celestial phenomena, celestial coordinate systems such as J2000, J2000d, and GAL are utilized.  </p>
+            <h3> Celesitial Coordinates </h3>
+            <p> Imagine a big sphere encapsulating the Earth. That would be the celestial sphereon which celestial coordinates are based on. The squares on the celestial sphere represent high-energy celestial phenomena that have occurred in space. The celestial sphere has an equator called the celestial (not the same as Earth's equator). It has north and south poles that align with the Earth's poles. These coordinates use declination and right ascension to determine the locations of points. Declination is like latitude going from 90° to -90° with 0° at the celestial equator and right ascension serves as the longitude and it is represented with a value from 0 to 24 hours. </p>
+        </span>
+        <span class="right-column-container">
+            <h2> Spacecraft FOVs??? </h2>
+            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+            <br>
+            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+        </span>
+
+        <span id="aladin-lite-div"></span>
+        <script type="text/javascript" src="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.js" charset="utf-8"></script>
+        <script type="text/javascript">
+        var aladin = A.aladin('#aladin-lite-div', {survey: "P/DSS2/color", fov:60});
+        </script>
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <hr>
+
+        <section id="bottom">
+            <div class="left-column-container">
+                <h2> Wavelength </h2>
+                <span></span>
+                <div id="wavelength-selector">
+                    <input id="Gamma" class="jpg-survey" type="radio" name="survey" value="http://skies.esac.esa.int/Integral/color/" checked><label for="Gamma">Gamma Ray<label>
+                    <input id="X-ray" class="jpg-survey" type="radio" name="survey" value="http://alasky.u-strasbg.fr/2MASS/Color/"><label for="X-ray">X-ray<label>
+                    <input id="UV" class="png-survey" type="radio" name="survey" value="https://skyview.gsfc.nasa.gov/surveys/uvot/cnt/UVW2/"><label for="UV">Ultraviolet<label>
+                    <input id="Visual" class="jpg-survey" type="radio" name="survey" value="http://alasky.u-strasbg.fr/DSS/DSSColor" checked><label for="Visible">Visible<label>
+                    <input id="Infrared" class="png-survey" type="radio" name="survey" value="http://alasky.u-strasbg.fr/PLANCK/R2/HFI_SkyMap_100_2048_R2.00/"><label for="Infrared">Infrared<label>
+                    <input id="Radio" class="png-survey" type="radio" name="survey" value="http://alasky.u-strasbg.fr/ancillary/simbad-biblio/Radio/"><label for="Radio">Radio<label>
+                </div>
+
+            <script type="text/javascript" src="https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.js" charset="utf-8"></script>
+            <script type="text/javascript">
+                var aladin = A.aladin('#aladin-lite-non', {survey: "P/DSS2/color", fov:60});
+                $('input[name=survey]').change(function()
+                {
+                    var surveyType = "";
+                    if ($(this).hasClass("jpg-survey"))
+                    {
+                        surveyType = "jpg";
+                    }
+                    else if ($(this).hasClass("png-survey"))
+                    {
+                        surveyType = "png";
+                    }
+                aladin.setImageSurvey(aladin.createImageSurvey("Survey", "Survey", $(this).val(), "equatorial", 100, {imgFormat: surveyType}));
+            });
+            </script>
+
+
+            </div>
+            <div class="left-column-container">
+                <h2> Timeline </h2>
+                <div class="slidecontainer">
+  <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+</div>
+            </div>
+            <div class="right-column-container">
+              <h2> Info </h2>
+              <span id="made-for">
+                  <p> Made for: 2020 NASA SpaceApps Hackathon </p>
+              </span>
+              <span id="space-apps-logo">
+                  <a href="https://www.spaceappschallenge.org/" target="blank"><img src="SpaceAppsLogo.png" style="width: 4vw; height: auto; padding-left: 1vw; margin-top: -1vw;"></a>
+              </span>
+              <span id="names">
+                  <p> Made by: Abigail Lee, Jason Liu, Benson Manzano, Zahed Siddiqui </p>
+              </span>
+              <span id="tks-logo">
+                  <a href="https://tks.world/" target="blank"><img src="TKSLogoWhiteCropped.png" style="width: 4vw; height: auto; margin: 2vw 1vw -2vw 2vw;"></a>
+              </span>
+            </div>
+        </section>
+
+        <div id='aladin-lite-non' style='width: 500px;height: 500px;'></div>
+                <script type='text/javascript' src='https://aladin.u-strasbg.fr/AladinLite/api/v2/latest/aladin.min.js' charset='utf-8'></script>
+
+        <script>
+        function parseTime (timeStr) {
+        let year = parseInt(timeStr.substr(0, 4)) - 1990;
+        let month = parseInt(timeStr.substr(5, 2));
+        let day = parseInt(timeStr.substr(8, 2));
+        return 365*year + 30*month + day;
+        }
+        function prepareSNeData (catalog, start, end) {
+        let newSources = A.catalog({onClick: 'showPopup'});
+        for (const source of catalog.sources) {
+        let time = parseInt(source.data.EpMax.substr(0, 4));
+        if (time >= start && time <= end) {
+        newSources.addSources(source);
+        }
+        }
+        return newSources;
+        }
+        function sortByTime (catalog, SRe) {
+        catalog.sources.sort(function(a, b){
+        if (SRe) {
+        var aTime = parseTime(a.data.EpMax);
+        var bTime = parseTime(b.data.EpMax);
+        } else {
+        var aTime = parseTime(a.data.Date);
+        var bTime = parseTime(b.data.Date);
+        }
+        if (aTime < bTime) {
+        return -1;
+        } else if (aTime > bTime) {
+        return 1;
+        }
+        return 0;
+        });
+        return catalog;
+        }
+        function promiseSRe (catalog) {
+        var promise = new Promise(function(resolve) {
+        setTimeout(() => {resolve(sortByTime(prepareSNeData(catalog, 1990, 2014), true))}, 4000);
+        });
+        return promise;
+        }
+        function promiseGRB (catalog) {
+        var promise = new Promise(function(resolve) {
+        setTimeout(() => {resolve(sortByTime(catalog, false))}, 1000);
+        });
+        return promise;
+        }
+        async function prepareData () {
+        let aladin = A.aladin('#aladin-lite-div', {target: 'M 45', fov: 5});
+        let rawSNeCatalog = await A.catalogFromURL('https://vizier.unistra.fr/viz-bin/votable?-source=B/sn/sncat&-c=galactic%20center&-out.max=9999&-out.add=EpMax&-c.rd=180', {onClick: 'showPopup'});
+        let rawGRBCatalog = await A.catalogFromVizieR('IX/51/table2', 'galactic center', 180, {onClick: 'showPopup'});
+        await aladin.addCatalog(rawSNeCatalog);
+        await aladin.addCatalog(rawGRBCatalog);
+        var output = {};
+        output.SNe = await promiseSRe(rawSNeCatalog);
+        output.GRB = await promiseGRB(rawGRBCatalog);
+        return output;
+        }
+        var initialCatalogs = prepareData();
+
+        /* function getSources (catalog) {
+            return catalog;
+            return catalog.sources;
+            if (catalog.sources[1000]) {
+                console.log(catalog.sources);
+            } else {
+                setTimeout(getSources, 500);
+            }
+        } */
+        async function prepareData () {
+            let aladin = A.aladin('#aladin-lite-div', {target: 'M 45', fov: 5});
+            let rawSNeCatalog = await A.catalogFromURL('https://vizier.unistra.fr/viz-bin/votable?-source=B/sn/sncat&-c=galactic%20center&-out.max=9999&-out.add=EpMax&-c.rd=180', {onClick: 'showPopup'});
+            let rawGRBCatalog = await A.catalogFromVizieR('IX/51/table2', 'galactic center', 180, {onClick: 'showPopup'});
+            await aladin.addCatalog(rawSNeCatalog);
+            await aladin.addCatalog(rawGRBCatalog);
+            console.log(rawSNeCatalog);
+            let SNeCatalog = await sortByTime(prepareSNeData(rawSNeCatalog, 1990, 2014), true);
+            let GRBCatalog = await sortByTime(rawGRBCatalog, false);
+            return {SNe: SNeCatalog, GRB: GRBCatalog};
+        }
+        function parseTime (timeStr) {
+            let year = parseInt(timeStr.substr(0, 4)) - 1990;
+            let month = parseInt(timeStr.substr(5, 2));
+            let day = parseInt(timeStr.substr(8, 2));
+            console.log(year);
+            return 365*year + 30*month + day;
+        }
+        function prepareSNeData (catalog, start, end) {
+            let newSources = A.catalog({onClick: 'showPopup'});
+            for (const source of catalog.sources) {
+                let time = parseInt(source.data.EpMax.substr(0, 4));
+                if (time >= start && time <= end) {
+                    newSources.addSources(source);
+                }
+            }
+            return newSources;
+        }
+        function sortByTime (catalog, SRe) {
+            console.log(catalog.sources);
+            console.log(catalog.sources.sort(function(a, b){
+                if (SRe) {
+                    let aTime = parseTime(a.data.EpMax);
+                    let bTime = parseTime(b.data.EpMax);
+                } else {
+                    let aTime = parseTime(a.data.Date);
+                    let bTime = parseTime(b.data.Date);
+                }
+                if (aTime < bTime) {
+                    return -1;
+                } else if (aTime > bTime) {
+                    return 1;
+                }
+                return 0;
+            }));
+            return catalog;
+        }
+        var catalogs = prepareData();
+        console.log(catalogs);
+    </script>
+
+    </body>
