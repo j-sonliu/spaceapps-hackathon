@@ -55,3 +55,4 @@ async function prepareData () {
     output.GRB = await promiseGRB(rawGRBCatalog);
     return output;
 }
+var initialCatalogs = prepareData();
